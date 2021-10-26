@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "inmanta-module-factory"
+version = "0.0.1"
+description = "Library for building inmanta modules with python code"
+authors = ["Inmanta <code@inmanta.com>"]
+license = "Apache-2.0"
+packages = [
+    { include = "inmanta_module_factory", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.6.1,<4.0"
+PyYAML = "^5.3"
+
+[tool.poetry.dev-dependencies]
+inmanta-dev-dependencies = {extras = ["module"], version = "^1.59.0"}
+types-PyYAML = "^5.4.12"
+
+[tool.black]
+line-length = 128
+target-version = ['py36', 'py37', 'py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | \.env
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+# Black splits up import statements that are too long
+# Setting isorts line_length to 88 (blacks default) so they do not collide
+line_length = 88
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
