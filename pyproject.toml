@@ -14,7 +14,7 @@ PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
 inmanta-dev-dependencies = {extras = ["module"], version = "^1.59.0"}
-types-PyYAML = "^5.4.12"
+types-PyYAML = "^6.0.0"
 
 [tool.black]
 line-length = 128
