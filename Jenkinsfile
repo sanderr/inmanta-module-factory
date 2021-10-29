@@ -6,7 +6,6 @@ pipeline {
 
     environment {
         PIP_INDEX_URL = 'https://artifacts.internal.inmanta.com/inmanta/dev'
-        PIP_PRE = 'true'
     }
 
     options {
