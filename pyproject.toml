@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.6.1,<4.0"
-PyYAML = "^5.3"
+PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
 inmanta-dev-dependencies = {extras = ["module"], version = "^1.59.0"}
