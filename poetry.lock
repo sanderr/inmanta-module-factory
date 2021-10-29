@@ -304,19 +304,19 @@ python-versions = "*"
 
 [[package]]
 name = "flake8-isort"
-version = "4.0.0"
+version = "4.1.1"
 description = "flake8 plugin that integrates isort ."
 category = "dev"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-flake8 = ">=3.2.1,<4"
+flake8 = ">=3.2.1,<5"
 isort = ">=4.3.5,<6"
 testfixtures = ">=6.8.0,<7"
 
 [package.extras]
-test = ["pytest (>=4.0.2,<6)", "toml"]
+test = ["pytest-cov"]
 
 [[package]]
 name = "flake8-polyfill"
@@ -402,7 +402,7 @@ pytest-inmanta-extensions = ["pytest-inmanta-extensions (>=5.1.1.0.dev,<5.2.0)"]
 
 [[package]]
 name = "inmanta-dev-dependencies"
-version = "1.62.0"
+version = "1.63.0"
 description = "Package collecting all common dev dependencies of inmanta modules and extensions to synchronize dependency versions."
 category = "dev"
 optional = false
@@ -413,7 +413,7 @@ black = "20.8b1"
 flake8 = "3.9.2"
 flake8-black = "0.2.3"
 flake8-copyright = "0.2.2"
-flake8-isort = "4.0.0"
+flake8-isort = "4.1.1"
 isort = "5.8.0"
 lxml = "4.6.3"
 mypy = "0.910"
@@ -425,7 +425,7 @@ pytest-inmanta = {version = "*", optional = true, markers = "extra == \"module\"
 sphinx = ["Sphinx (==4.2.0)", "inmanta-sphinx (==1.4.4)", "recommonmark (==0.7.1)", "sphinx-argparse (==0.3.1)", "sphinx-autodoc-annotation (==1.0-1)", "sphinx-click (==3.0.1)", "sphinx-rtd-theme (==1.0.0)", "sphinx-tabs (==3.2.0)", "sphinxcontrib-redoc (==1.6.0)", "sphinxcontrib-serializinghtml (==1.1.5)"]
 core = ["asyncpg (>=0.21.0,<1.0.0)", "psycopg2 (==2.9.1)", "pytest-env (==0.6.2)", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.4)"]
 extension = ["asyncpg (>=0.21.0,<1.0.0)", "psycopg2 (==2.9.1)", "pytest-env (==0.6.2)", "pytest-inmanta-extensions", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.4)"]
-async = ["pytest-asyncio (==0.15.1)", "pytest-timeout (==2.0.1)"]
+async = ["pytest-asyncio (==0.16.0)", "pytest-timeout (==2.0.1)"]
 pytest = ["pytest-cover (==3.0.0)", "pytest-env (==0.6.2)", "pytest-instafail (==0.4.2)", "pytest-randomly (==3.10.1)", "pytest-sugar (==0.9.4)", "pytest-xdist (==2.4.0)"]
 module = ["pytest-inmanta"]
 
@@ -896,7 +896,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6.1,<4.0"
-content-hash = "80e0244773b291b8e61044687e16e02fcb4a975bb6b9f9a13d8613188a3670df"
+content-hash = "d7d134335896c6e707aad9cfa63d778067037bdfcf7378a6f8723269a7e8929d"
 
 [metadata.files]
 appdirs = [
@@ -1076,8 +1076,8 @@ flake8-copyright = [
     {file = "flake8_copyright-0.2.2-py3-none-any.whl", hash = "sha256:dbad92ee5f51398722cd571b6e36cc3651914bf1b286b0e638bba1f4af0b6f5b"},
 ]
 flake8-isort = [
-    {file = "flake8-isort-4.0.0.tar.gz", hash = "sha256:2b91300f4f1926b396c2c90185844eb1a3d5ec39ea6138832d119da0a208f4d9"},
-    {file = "flake8_isort-4.0.0-py2.py3-none-any.whl", hash = "sha256:729cd6ef9ba3659512dee337687c05d79c78e1215fdf921ed67e5fe46cce2f3c"},
+    {file = "flake8-isort-4.1.1.tar.gz", hash = "sha256:d814304ab70e6e58859bc5c3e221e2e6e71c958e7005239202fee19c24f82717"},
+    {file = "flake8_isort-4.1.1-py3-none-any.whl", hash = "sha256:c4e8b6dcb7be9b71a02e6e5d4196cefcef0f3447be51e82730fb336fff164949"},
 ]
 flake8-polyfill = [
     {file = "flake8-polyfill-1.0.2.tar.gz", hash = "sha256:e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"},
@@ -1099,7 +1099,7 @@ inmanta-core = [
     {file = "inmanta-core-5.1.1.tar.gz", hash = "sha256:afa05fc6d3445081a7c9f85cc10af631bc574e40f64f8372a760e91128e88b89"},
 ]
 inmanta-dev-dependencies = [
-    {file = "inmanta-dev-dependencies-1.62.0.tar.gz", hash = "sha256:f5a10240241a749d371262ef2adf56d8279a667077f3ef4896d9c4b7a4938fa7"},
+    {file = "inmanta-dev-dependencies-1.63.0.tar.gz", hash = "sha256:f9c62f8aaaf2ae217ac5c8324990d749bd609572a39f131361ecb90b013dcd4c"},
 ]
 isort = [
     {file = "isort-5.8.0-py3-none-any.whl", hash = "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d"},
