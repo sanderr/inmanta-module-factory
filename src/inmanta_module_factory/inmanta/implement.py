@@ -31,6 +31,7 @@ class Implement(ModuleElement):
         entity: Entity,
         condition: Optional[str] = None,
         description: Optional[str] = None,
+        using_parents: bool = False,
     ) -> None:
         """
         An implement statement
@@ -44,6 +45,7 @@ class Implement(ModuleElement):
         self.implementation = implementation
         self.entity = entity
         self.condition = condition
+        self.using_parents = using_parents
 
     def _ordering_key(self) -> str:
         return f"{chr(255)}.implement.{self.entity.full_path_string}.{self.implementation.full_path_string}"
@@ -87,6 +89,9 @@ class Implement(ModuleElement):
         if self.path_string != self.implementation.path_string:
             # Implementation is in a different file
             implementation_path = self.implementation.full_path_string
+
+        if self.using_parents:
+            implementation_path += ", parents"
 
         condition = ""
         if self.condition:
