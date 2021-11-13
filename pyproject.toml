@@ -14,7 +14,7 @@ PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
 inmanta-dev-dependencies = {extras = ["module"], version = "^1.66.0"}
-types-PyYAML = "^6.0.0"
+types-PyYAML = "^6.0.1"
 # The latest stable inmanta-core (5.1.1) release is only compatible with
 # docstring_parser = "<0.8"
 docstring-parser = "<0.8"
