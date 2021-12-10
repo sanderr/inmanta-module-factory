@@ -402,7 +402,7 @@ pytest-inmanta-extensions = ["pytest-inmanta-extensions (>=5.1.1.0.dev,<5.2.0)"]
 
 [[package]]
 name = "inmanta-dev-dependencies"
-version = "1.68.0"
+version = "1.69.0"
 description = "Package collecting all common dev dependencies of inmanta modules and extensions to synchronize dependency versions."
 category = "dev"
 optional = false
@@ -422,11 +422,11 @@ pytest = "6.2.5"
 pytest-inmanta = {version = "*", optional = true, markers = "extra == \"module\""}
 
 [package.extras]
-sphinx = ["Sphinx (==4.3.0)", "inmanta-sphinx (==1.4.4)", "recommonmark (==0.7.1)", "sphinx-argparse (==0.3.1)", "sphinx-autodoc-annotation (==1.0-1)", "sphinx-click (==3.0.2)", "sphinx-rtd-theme (==1.0.0)", "sphinx-tabs (==3.2.0)", "sphinxcontrib-redoc (==1.6.0)", "sphinxcontrib-serializinghtml (==1.1.5)"]
+sphinx = ["Sphinx (==4.3.1)", "inmanta-sphinx (==1.4.4)", "recommonmark (==0.7.1)", "sphinx-argparse (==0.3.1)", "sphinx-autodoc-annotation (==1.0-1)", "sphinx-click (==3.0.2)", "sphinx-rtd-theme (==1.0.0)", "sphinx-tabs (==3.2.0)", "sphinxcontrib-redoc (==1.6.0)", "sphinxcontrib-serializinghtml (==1.1.5)"]
 core = ["asyncpg (>=0.21.0,<1.0.0)", "psycopg2 (==2.9.2)", "pytest-env (==0.6.2)", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.4)"]
 extension = ["asyncpg (>=0.21.0,<1.0.0)", "psycopg2 (==2.9.2)", "pytest-env (==0.6.2)", "pytest-inmanta-extensions", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.4)"]
 async = ["pytest-asyncio (==0.16.0)", "pytest-timeout (==2.0.1)"]
-pytest = ["pytest-cover (==3.0.0)", "pytest-env (==0.6.2)", "pytest-instafail (==0.4.2)", "pytest-randomly (==3.10.2)", "pytest-sugar (==0.9.4)", "pytest-xdist (==2.4.0)"]
+pytest = ["pytest-cover (==3.0.0)", "pytest-env (==0.6.2)", "pytest-instafail (==0.4.2)", "pytest-randomly (==3.10.3)", "pytest-sugar (==0.9.4)", "pytest-xdist (==2.4.0)"]
 module = ["pytest-inmanta"]
 
 [[package]]
@@ -896,7 +896,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6.1,<4.0"
-content-hash = "f97b76bdaf29f15cb69fb0ae76057a2fcb5bd4e3fe96c3c1a750d9e32736f32f"
+content-hash = "82cec09c2998de6c77f575d0a7a513a1ff6b94d34b589bde4aea9d1c682564a2"
 
 [metadata.files]
 appdirs = [
@@ -1113,7 +1113,7 @@ inmanta-core = [
     {file = "inmanta-core-5.1.1.tar.gz", hash = "sha256:afa05fc6d3445081a7c9f85cc10af631bc574e40f64f8372a760e91128e88b89"},
 ]
 inmanta-dev-dependencies = [
-    {file = "inmanta-dev-dependencies-1.68.0.tar.gz", hash = "sha256:b35b0b8d02e13ae1fa6eebf53734c3f7826884ed5549efb206eaca3dbc02a24e"},
+    {file = "inmanta-dev-dependencies-1.69.0.tar.gz", hash = "sha256:d489b3799901b4b0f27d2f199e8c22cad44047b9f20ca7bc7f89e80077c72d70"},
 ]
 isort = [
     {file = "isort-5.8.0-py3-none-any.whl", hash = "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d"},
