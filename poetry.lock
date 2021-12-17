@@ -402,7 +402,7 @@ pytest-inmanta-extensions = ["pytest-inmanta-extensions (>=5.1.1.0.dev,<5.2.0)"]
 
 [[package]]
 name = "inmanta-dev-dependencies"
-version = "1.69.0"
+version = "1.70.0"
 description = "Package collecting all common dev dependencies of inmanta modules and extensions to synchronize dependency versions."
 category = "dev"
 optional = false
@@ -896,7 +896,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6.1,<4.0"
-content-hash = "82cec09c2998de6c77f575d0a7a513a1ff6b94d34b589bde4aea9d1c682564a2"
+content-hash = "fcb7cf7567461e58983b89dc1696ecc20efff323b3f25104327a358429d1c791"
 
 [metadata.files]
 appdirs = [
@@ -1112,7 +1112,7 @@ inmanta-core = [
     {file = "inmanta-core-5.1.1.tar.gz", hash = "sha256:afa05fc6d3445081a7c9f85cc10af631bc574e40f64f8372a760e91128e88b89"},
 ]
 inmanta-dev-dependencies = [
-    {file = "inmanta-dev-dependencies-1.69.0.tar.gz", hash = "sha256:d489b3799901b4b0f27d2f199e8c22cad44047b9f20ca7bc7f89e80077c72d70"},
+    {file = "inmanta-dev-dependencies-1.70.0.tar.gz", hash = "sha256:ffad42c6156c394894d79bbd62b73d38dab13137a3ef75f1f9358a758b3f07c0"},
 ]
 isort = [
     {file = "isort-5.8.0-py3-none-any.whl", hash = "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d"},
