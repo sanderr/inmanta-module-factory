@@ -402,7 +402,7 @@ pytest-inmanta-extensions = ["pytest-inmanta-extensions (>=5.1.1.0.dev,<5.2.0)"]
 
 [[package]]
 name = "inmanta-dev-dependencies"
-version = "1.73.0"
+version = "1.74.0"
 description = "Package collecting all common dev dependencies of inmanta modules and extensions to synchronize dependency versions."
 category = "dev"
 optional = false
@@ -422,12 +422,12 @@ pytest = "6.2.5"
 pytest-inmanta = {version = "*", optional = true, markers = "extra == \"module\""}
 
 [package.extras]
-core = ["psycopg2 (==2.9.3)", "pytest-env (==0.6.2)", "asyncpg (>=0.21.0,<1.0.0)", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.5)"]
-extension = ["psycopg2 (==2.9.3)", "pytest-env (==0.6.2)", "pytest-inmanta-extensions", "asyncpg (>=0.21.0,<1.0.0)", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.5)"]
+sphinx = ["Sphinx (==4.3.2)", "inmanta-sphinx (==1.4.4)", "recommonmark (==0.7.1)", "sphinx-argparse (==0.3.1)", "sphinx-autodoc-annotation (==1.0-1)", "sphinx-click (==3.0.2)", "sphinx-rtd-theme (==1.0.0)", "sphinx-tabs (==3.2.0)", "sphinxcontrib-redoc (==1.6.0)", "sphinxcontrib-serializinghtml (==1.1.5)"]
+core = ["asyncpg (>=0.21.0,<1.0.0)", "psycopg2 (==2.9.3)", "pytest-env (==0.6.2)", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.5)"]
+extension = ["asyncpg (>=0.21.0,<1.0.0)", "psycopg2 (==2.9.3)", "pytest-env (==0.6.2)", "pytest-inmanta-extensions", "pytest-postgresql (==3.0.0)", "tornado (>=6.1,<7.0)", "tox (==3.24.5)"]
 async = ["pytest-asyncio (==0.16.0)", "pytest-timeout (==2.0.2)"]
 pytest = ["pytest-cover (==3.0.0)", "pytest-env (==0.6.2)", "pytest-instafail (==0.4.2)", "pytest-randomly (==3.10.3)", "pytest-sugar (==0.9.4)", "pytest-xdist (==2.5.0)"]
 module = ["pytest-inmanta"]
-sphinx = ["Sphinx (==4.3.2)", "inmanta-sphinx (==1.4.4)", "recommonmark (==0.7.1)", "sphinx-argparse (==0.3.1)", "sphinx-autodoc-annotation (==1.0-1)", "sphinx-click (==3.0.2)", "sphinx-rtd-theme (==1.0.0)", "sphinx-tabs (==3.2.0)", "sphinxcontrib-redoc (==1.6.0)", "sphinxcontrib-serializinghtml (==1.1.5)"]
 
 [[package]]
 name = "isort"
@@ -904,7 +904,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6.1,<4.0"
-content-hash = "b1e3af117b7336e9c7ae2eebc7c1a051b0e9323630aab9aa4e7874881afd80c6"
+content-hash = "f4e68671406de7470e73dd954b1ae3350a4a5456b2db5d3d9cd1628b98e858fd"
 
 [metadata.files]
 appdirs = [
@@ -1120,7 +1120,7 @@ inmanta-core = [
     {file = "inmanta-core-5.1.1.tar.gz", hash = "sha256:afa05fc6d3445081a7c9f85cc10af631bc574e40f64f8372a760e91128e88b89"},
 ]
 inmanta-dev-dependencies = [
-    {file = "inmanta-dev-dependencies-1.73.0.tar.gz", hash = "sha256:ab5d0097f2f7fec50da0178590d9faab2a6db5c995ea3d1411ba2acb9fb9978d"},
+    {file = "inmanta-dev-dependencies-1.74.0.tar.gz", hash = "sha256:8090f6c7d597dcf0de875abf193cc36756087f628f1751ed1a6404dbe16dd0ca"},
 ]
 isort = [
     {file = "isort-5.8.0-py3-none-any.whl", hash = "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d"},
