@@ -21,11 +21,12 @@ import os
 import shutil
 import sys
 import tempfile
-from typing import Callable, Generator
+from typing import Callable, Generator, Tuple
 
 import pytest
 import yaml
 from _pytest.monkeypatch import MonkeyPatch
+from inmanta import module
 from pytest_inmanta.plugin import Project, get_module_data
 
 LOGGER = logging.getLogger(__name__)
@@ -52,17 +53,17 @@ def project_shared_no_plugins(project_factory: Callable[[bool], "Project"]) -> G
 def project_factory(monkeypatch: MonkeyPatch) -> Generator[Callable[[bool], "Project"], None, None]:
     """
     Overwriting the fixture from pytest_inmanta with a function scope and a modified behavior:
-        - The fixture doesn't try to get the module in this context as we are not in a module context
-        - The fixture overwrite the method pytest_inmanta.plugin.get_module_info to make it return
-          (None, "std").  This means that only std module will be initially loaded in the project.
+        - The fixture doesn't try to get the module in this context as we are now in a module context
+        - The fixture overwrites the method pytest_inmanta.plugin.get_module to make it return
+          the std module. This means that only std module will be initially loaded in the project.
     """
     import pytest_inmanta.plugin
 
-    monkeypatch.setattr(pytest_inmanta.plugin, "get_module_info", lambda: (None, "std"))
-
     _sys_path = sys.path
     test_project_dir = tempfile.mkdtemp()
-    os.mkdir(os.path.join(test_project_dir, "libs"))
+    libs_dir = os.path.join(test_project_dir, "libs")
+    os.mkdir(libs_dir)
+    env_dir = os.path.join(test_project_dir, ".env")
 
     project_file = {
         "name": "testcase",
@@ -74,8 +75,18 @@ def project_factory(monkeypatch: MonkeyPatch) -> Generator[Callable[[bool], "Pro
     with open(os.path.join(test_project_dir, "project.yml"), "w+") as f:
         yaml.dump(project_file, f)
 
+    # Ensure the std module is installed
+    project = module.Project(path=test_project_dir, autostd=True, venv_path=env_dir)
+    module.Module.install(project, modulename="std", requirements=[])
+
+    def get_module() -> Tuple[module.Module, str]:
+        std_module_dir = os.path.join(libs_dir, "std")
+        return module.Module(project, std_module_dir), std_module_dir
+
+    monkeypatch.setattr(pytest_inmanta.plugin, "get_module", get_module)
+
     def create_project(load_plugins: bool = True) -> Project:
-        test_project = Project(test_project_dir, load_plugins=load_plugins)
+        test_project = Project(test_project_dir, env_path=env_dir, load_plugins=load_plugins)
         test_project.create_module(
             "unittest",
             initcf=get_module_data("init.cf"),
