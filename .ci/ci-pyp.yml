@@ -1,0 +1,4 @@
+pipeline_template: ci/inmanta-tools/Jenkinsfile-pyp
+repo_name: inmanta-module-factory
+public: true
+build_system: pep517
