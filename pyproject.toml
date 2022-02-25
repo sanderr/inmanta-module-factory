@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "inmanta-module-factory"
-version = "0.0.2"
+version = "0.0.3"
 description = "Library for building inmanta modules with python code"
 authors = ["Inmanta <code@inmanta.com>"]
 license = "Apache-2.0"

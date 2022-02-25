@@ -65,4 +65,9 @@ INMANTA_RESERVED_KEYWORDS = (
     "when",
     "as",
     "class",
+    "import",
+    "using",
+    "if",
+    "else",
+    "from",
 )
