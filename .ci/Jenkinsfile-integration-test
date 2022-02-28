@@ -77,22 +77,24 @@ pipeline {
                 expression { BRANCH_NAME == 'master' }
             }
             steps {
-                withCredentials([
-                usernamePassword(
-                    credentialsId: 'devpi-user',
-                    passwordVariable: 'DEVPI_PASS',
-                    usernameVariable: 'DEVPI_USER'
-                )
-                ]) {
-                sh '''
-                    ${WORKSPACE}/env/bin/pip3 install -U devpi-client
-                    ${WORKSPACE}/env/bin/devpi use https://artifacts.internal.inmanta.com/inmanta/dev
-                    ${WORKSPACE}/env/bin/devpi login ${DEVPI_USER} --password=${DEVPI_PASS}
-                    rm -f dist/*
-                    ${WORKSPACE}/env/bin/python3 -m poetry build
-                    ${WORKSPACE}/env/bin/devpi upload dist/*
-                    ${WORKSPACE}/env/bin/devpi logoff
-                    '''
+                dir(env.REPO_NAME) {
+                    withCredentials([
+                    usernamePassword(
+                        credentialsId: 'devpi-user',
+                        passwordVariable: 'DEVPI_PASS',
+                        usernameVariable: 'DEVPI_USER'
+                    )
+                    ]) {
+                    sh '''
+                        ${WORKSPACE}/env/bin/pip3 install -U devpi-client
+                        ${WORKSPACE}/env/bin/devpi use https://artifacts.internal.inmanta.com/inmanta/dev
+                        ${WORKSPACE}/env/bin/devpi login ${DEVPI_USER} --password=${DEVPI_PASS}
+                        rm -f dist/*
+                        ${WORKSPACE}/env/bin/python3 -m poetry build
+                        ${WORKSPACE}/env/bin/devpi upload dist/*
+                        ${WORKSPACE}/env/bin/devpi logoff
+                        '''
+                    }
                 }
             }
         }
