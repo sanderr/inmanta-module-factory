@@ -16,3 +16,4 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
+__version__ = "0.0.3"
