@@ -16,10 +16,10 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
-from typing import List, Optional, Set
+from typing import List, Optional, Sequence, Set
 
-from inmanta_module_factory.inmanta.attribute import Attribute
 from inmanta_module_factory.inmanta.entity import Entity
+from inmanta_module_factory.inmanta.entity_field import EntityField
 from inmanta_module_factory.inmanta.module_element import ModuleElement
 
 
@@ -28,7 +28,7 @@ class Index(ModuleElement):
         self,
         path: List[str],
         entity: Entity,
-        attributes: List[Attribute],
+        fields: Sequence[EntityField],
         description: Optional[str] = None,
     ) -> None:
         """
@@ -36,14 +36,15 @@ class Index(ModuleElement):
         :param path: The place in the module where the index should be printed
         :param entity: The entity this index is applied to
         :param attributes: A portion of the entity attributes on which apply the index
+        :param relations: A portion of the entity relations on which apply the index
         :param description: A description of the index, to be added as docstring
         """
         super().__init__("index", path, description)
         self.entity = entity
-        self.attributes = attributes
+        self.fields = fields
 
     def _ordering_key(self) -> str:
-        suffix = "_".join([attribute.name for attribute in self.attributes])
+        suffix = "_".join([field.name for field in self.fields])
         if self.path_string != self.entity.path_string:
             return f"{chr(255)}.index.{self.entity.full_path_string}_{suffix}"
 
@@ -59,7 +60,13 @@ class Index(ModuleElement):
         return imports
 
     def validate(self) -> bool:
-        return len(set(self.attributes) - set(self.entity.attributes)) == 0
+        if len(self.fields) == 0:
+            return False
+
+        if not len(set(self.fields) - self.entity.fields) == 0:
+            return False
+
+        return True
 
     def __str__(self) -> str:
         entity_path = self.entity.name
@@ -67,4 +74,4 @@ class Index(ModuleElement):
             # Entity is in another file
             entity_path = self.entity.full_path_string
 
-        return f"index {entity_path}({', '.join([attribute.name for attribute in self.attributes])})\n"
+        return f"index {entity_path}({', '.join([field.name for field in self.fields])})\n"

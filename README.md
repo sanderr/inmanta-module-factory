@@ -35,11 +35,10 @@ module_builder = InmantaModuleBuilder(module)
 entity = Entity(
     name="Test",
     path=[module.name],
-    attributes=[
+    fields=[
         Attribute(
             name="test",
-            inmanta_type=InmantaPrimitiveList("string"),
-            default="[]",
+            inmanta_type="string",
             description="This is a test attribute",
         )
     ],
@@ -63,7 +62,7 @@ implement = Implement(
 index = Index(
     path=[module.name],
     entity=entity,
-    attributes=entity.attributes,
+    fields=entity.attributes,
     description="This is a test index",
 )
 
@@ -71,12 +70,12 @@ relation = EntityRelation(
     name="tests",
     path=[module.name],
     entity=entity,
-    arity=(0, None),
+    cardinality=(0, None),
     peer=EntityRelation(
         name="",
         path=[module.name],
         entity=entity,
-        arity=(0, 0),
+        cardinality=(0, 0),
     ),
 )
 

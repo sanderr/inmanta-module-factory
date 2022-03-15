@@ -17,10 +17,10 @@
     Author: Inmanta
 """
 from textwrap import indent
-from typing import List, Optional, Set
+from typing import List, Optional, Sequence, Set
 
 from inmanta_module_factory.helpers.const import INDENT_PREFIX
-from inmanta_module_factory.inmanta.attribute import Attribute
+from inmanta_module_factory.inmanta import attribute, entity_field, entity_relation
 from inmanta_module_factory.inmanta.module_element import ModuleElement
 
 
@@ -29,21 +29,36 @@ class Entity(ModuleElement):
         self,
         name: str,
         path: List[str],
-        attributes: List[Attribute],
-        parents: Optional[List["Entity"]] = None,
+        fields: Optional[Sequence["entity_field.EntityField"]] = None,
+        parents: Optional[Sequence["Entity"]] = None,
         description: Optional[str] = None,
     ) -> None:
         """
         An entity definition.
         :param name: The name of the entity
         :param path: The place in the module where the entity should be printed out
-        :param attributes: A list of all the attributes of this entity
+        :param fields: A list of all the attributes and relations of this entity.
+            All the fields provided here will be attached to this entity using their
+            method `attach_entity`.
         :param parents: A list of all the entities this one inherit from
         :param description: A description of this entity, to be added in its docstring
         """
         super().__init__(name, path, description)
-        self.attributes = attributes
+        self.fields = {field for field in (fields or [])}
+        for field in self.fields:
+            field.attach_entity(self)
         self.parents = parents or []
+
+    def attach_field(self, field: "entity_field.EntityField") -> None:
+        self.fields.add(field)
+
+    @property
+    def attributes(self) -> List["attribute.Attribute"]:
+        return [field for field in self.fields if isinstance(field, attribute.Attribute)]
+
+    @property
+    def relations(self) -> List["entity_relation.EntityRelation"]:
+        return [field for field in self.fields if isinstance(field, entity_relation.EntityRelation)]
 
     def _ordering_key(self) -> str:
         return self.name
@@ -61,11 +76,13 @@ class Entity(ModuleElement):
     def docstring(self) -> str:
         doc = super().docstring()
 
-        for attribute in self.attributes:
-            description = attribute.description or ""
-            doc += f":attr {attribute.name}: {description}\n"
+        for x_attribute in sorted(self.attributes, key=lambda x_attribute: x_attribute.name):
+            description = x_attribute.description or ""
+            doc += f":attr {x_attribute.name}: {description}\n"
 
-        # TODO add relations ?
+        for relation in sorted(self.relations, key=lambda relation: relation.name):
+            description = relation.description or ""
+            doc += f":rel {relation.name}: {description}\n"
 
         return doc
 

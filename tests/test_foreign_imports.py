@@ -39,7 +39,7 @@ def test_foreign_implementation(project: Project) -> None:
     entity = Entity(
         "Test",
         path=[module.name],
-        attributes=[
+        fields=[
             Attribute(
                 name="test",
                 inmanta_type="string",

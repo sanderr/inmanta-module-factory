@@ -16,3 +16,16 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
+from inmanta_module_factory.inmanta.attribute import Attribute  # noqa: F401
+from inmanta_module_factory.inmanta.entity import Entity  # noqa: F401
+from inmanta_module_factory.inmanta.entity_field import EntityField  # noqa: F401
+from inmanta_module_factory.inmanta.entity_relation import EntityRelation  # noqa: F401
+from inmanta_module_factory.inmanta.implement import Implement  # noqa: F401
+from inmanta_module_factory.inmanta.implementation import Implementation  # noqa: F401
+from inmanta_module_factory.inmanta.index import Index  # noqa: F401
+from inmanta_module_factory.inmanta.module import Module  # noqa: F401
+from inmanta_module_factory.inmanta.module_element import (  # noqa: F401
+    DummyModuleElement,
+    ModuleElement,
+)
+from inmanta_module_factory.inmanta.plugin import Plugin, PluginArgument  # noqa: F401
