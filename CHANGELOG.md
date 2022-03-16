@@ -1,3 +1,6 @@
+# v 1.1.0 (?)
+Changes in this release:
+
 # v 1.0.0 (2022-03-16)
 
  - Renaming `arity` to `cardinality` in relations
