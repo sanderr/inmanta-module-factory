@@ -1,4 +1,4 @@
-# v 1.0.0
+# v 0.1.0 (?)
 
  - Renaming `arity` to `cardinality` in relations
  - Add support for relations in index (breaking change) (#101)
