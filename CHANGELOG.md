@@ -1,4 +1,4 @@
-# v 1.1.0 (?)
+# v 1.1.0 (2022-03-18)
 Changes in this release:
  - Attributes of an entity are ordered by name.
  - The reserved keyword list has been extended.
