@@ -109,4 +109,8 @@ class EntityRelation(entity_field.EntityField, ModuleElement):
         elif self.peer.cardinality_min == self.peer.cardinality_max:
             peer_suffix = f".{self.peer.name} [{self.peer.cardinality_min}]"
 
-        return f"{entity_path}.{self.name} {cardinality} -- {peer_entity_path}{peer_suffix}\n"
+        docstring = self.docstring()
+        if docstring:
+            docstring = f'"""\n{docstring}\n"""\n'
+
+        return f"{entity_path}.{self.name} {cardinality} -- {peer_entity_path}{peer_suffix}\n{docstring}"

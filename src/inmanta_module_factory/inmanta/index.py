@@ -74,4 +74,8 @@ class Index(ModuleElement):
             # Entity is in another file
             entity_path = self.entity.full_path_string
 
-        return f"index {entity_path}({', '.join([field.name for field in self.fields])})\n"
+        docstring = self.docstring()
+        if docstring:
+            docstring = f'"""\n{docstring}\n"""\n'
+
+        return f"index {entity_path}({', '.join([field.name for field in self.fields])})\n{docstring}"

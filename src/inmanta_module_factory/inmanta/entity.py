@@ -74,13 +74,17 @@ class Entity(ModuleElement):
         return imports
 
     def docstring(self) -> str:
-        doc = super().docstring()
+        doc = super().docstring() + "\n"
 
         for x_attribute in sorted(self.attributes, key=lambda x_attribute: x_attribute.name):
             description = x_attribute.description or ""
             doc += f":attr {x_attribute.name}: {description}\n"
 
         for relation in sorted(self.relations, key=lambda relation: relation.name):
+            if not relation.name:
+                # Skipping one-direction relations on the side where they are not defined
+                continue
+
             description = relation.description or ""
             doc += f":rel {relation.name}: {description}\n"
 
@@ -106,7 +110,12 @@ class Entity(ModuleElement):
         return (
             self._definition()
             + indent(
-                ('"""\n' + self.docstring() + '"""\n' + "".join([str(attribute) for attribute in self.attributes])),
+                (
+                    '"""\n'
+                    + self.docstring()
+                    + '"""\n'
+                    + "".join([str(attribute) for attribute in sorted(self.attributes, key=lambda attr: attr.name)])
+                ),
                 prefix=INDENT_PREFIX,
             )
             + "end\n"

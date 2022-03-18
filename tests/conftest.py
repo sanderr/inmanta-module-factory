@@ -75,13 +75,17 @@ def project_factory(monkeypatch: MonkeyPatch) -> Generator[Callable[[bool], "Pro
     with open(os.path.join(test_project_dir, "project.yml"), "w+") as f:
         yaml.dump(project_file, f)
 
+    with open(os.path.join(test_project_dir, "main.cf"), "w+") as f:
+        f.write("import std")
+
     # Ensure the std module is installed
     project = module.Project(path=test_project_dir, autostd=True, venv_path=env_dir)
-    module.Module.install(project, modulename="std", requirements=[])
+    project.set(project)
+    project.install_modules()
 
-    def get_module() -> Tuple[module.Module, str]:
+    def get_module() -> Tuple[module.ModuleV1, str]:
         std_module_dir = os.path.join(libs_dir, "std")
-        return module.Module(project, std_module_dir), std_module_dir
+        return module.ModuleV1(project, std_module_dir), std_module_dir
 
     monkeypatch.setattr(pytest_inmanta.plugin, "get_module", get_module)
 

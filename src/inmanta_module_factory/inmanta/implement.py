@@ -97,4 +97,8 @@ class Implement(ModuleElement):
         if self.condition:
             condition = f" when {self.condition}"
 
-        return f"implement {entity_path} using {implementation_path}{condition}\n"
+        docstring = self.docstring()
+        if docstring:
+            docstring = f'"""\n{docstring}\n"""'
+
+        return f"implement {entity_path} using {implementation_path}{condition}\n{docstring}"

@@ -72,7 +72,7 @@ class ModuleElement:
         description = ""
         if self.description:
             description = self.description + "\n"
-        return "This docstring has been automatically generated.\n" + description
+        return description
 
     def validate(self) -> bool:
         """

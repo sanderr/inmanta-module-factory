@@ -16,6 +16,8 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
+from inmanta.parser.plyInmantaLex import keyworldlist
+
 INDENT_PREFIX = "    "  # Four spaces
 
 ASL_2_0_LICENSE = "ASL 2.0"
@@ -54,20 +56,4 @@ EULA_COPYRIGHT_HEADER_TMPL = '''
     "\n"
 )
 
-INMANTA_RESERVED_KEYWORDS = (
-    "entity",
-    "implement",
-    "implementation",
-    "for",
-    "in",
-    "end",
-    "index",
-    "when",
-    "as",
-    "class",
-    "import",
-    "using",
-    "if",
-    "else",
-    "from",
-)
+INMANTA_RESERVED_KEYWORDS = keyworldlist

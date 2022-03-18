@@ -1,5 +1,8 @@
 # v 1.1.0 (?)
 Changes in this release:
+ - Attributes of an entity are ordered by name.
+ - The reserved keyword list has been extended.
+ - Docstring support for relations and implementations has been added.
 
 # v 1.0.0 (2022-03-16)
 
