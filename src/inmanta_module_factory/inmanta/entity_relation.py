@@ -110,7 +110,7 @@ class EntityRelation(entity_field.EntityField, ModuleElement):
             peer_suffix = f".{self.peer.name} [{self.peer.cardinality_min}]"
 
         docstring = self.docstring()
-        if docstring:
-            docstring = f'"""\n{docstring}\n"""\n'
+        if docstring or self.peer.docstring():
+            docstring = f'"""\n{docstring}Peer relation: {self.peer.docstring()}"""\n'
 
         return f"{entity_path}.{self.name} {cardinality} -- {peer_entity_path}{peer_suffix}\n{docstring}"

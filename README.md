@@ -9,6 +9,7 @@ This package contains a few python classes that represents components of an inma
  - `EntityRelation`: Represents an relation between two entities.
  - `Index`: Represents an `index` statement.
  - `Attribute`: Represents an entity attribute.
+ - `TypeDef`: Represents a `typedef` statement.
  - `Module`: Represents the module itself.
  - `Plugin`: Represents a plugin.
 
@@ -26,6 +27,7 @@ from inmanta_module_factory.inmanta.implement import Implement
 from inmanta_module_factory.inmanta.implementation import Implementation
 from inmanta_module_factory.inmanta.index import Index
 from inmanta_module_factory.inmanta.module import Module
+from inmanta_module_factory.inmanta.types import InmantaStringType
 from inmanta_module_factory.builder import InmantaModuleBuilder
 
 
@@ -38,7 +40,7 @@ entity = Entity(
     fields=[
         Attribute(
             name="test",
-            inmanta_type="string",
+            inmanta_type=InmantaStringType,
             description="This is a test attribute",
         )
     ],

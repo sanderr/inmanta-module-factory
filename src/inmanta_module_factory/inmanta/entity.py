@@ -71,6 +71,15 @@ class Entity(ModuleElement):
                 # Parent is in a different file
                 imports.add(parent.path_string)
 
+        for attr in self.attributes:
+            if not attr.inmanta_type.path_string:
+                # This is a primitive type, it can not be imported
+                continue
+
+            if self.path_string != attr.inmanta_type.path_string:
+                # Attribute type is defined in another file
+                imports.add(attr.inmanta_type.path_string)
+
         return imports
 
     def docstring(self) -> str:

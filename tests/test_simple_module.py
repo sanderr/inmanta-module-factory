@@ -21,7 +21,7 @@ from pathlib import Path
 from pytest_inmanta.plugin import Project
 
 from inmanta_module_factory.builder import InmantaModuleBuilder
-from inmanta_module_factory.inmanta.attribute import Attribute, InmantaPrimitiveList
+from inmanta_module_factory.inmanta.attribute import Attribute
 from inmanta_module_factory.inmanta.entity import Entity
 from inmanta_module_factory.inmanta.entity_relation import EntityRelation
 from inmanta_module_factory.inmanta.implement import Implement
@@ -29,6 +29,7 @@ from inmanta_module_factory.inmanta.implementation import Implementation
 from inmanta_module_factory.inmanta.index import Index
 from inmanta_module_factory.inmanta.module import Module
 from inmanta_module_factory.inmanta.plugin import Plugin, PluginArgument
+from inmanta_module_factory.inmanta.types import InmantaListType, InmantaStringType
 
 
 def test_empty_module(project: Project) -> None:
@@ -57,7 +58,7 @@ def test_basic_module(project: Project) -> None:
         fields=[
             Attribute(
                 name="test",
-                inmanta_type=InmantaPrimitiveList("string"),
+                inmanta_type=InmantaListType(InmantaStringType),
                 default="[]",
                 description="This is a test list attribute",
             ),
@@ -67,7 +68,7 @@ def test_basic_module(project: Project) -> None:
 
     index_attribute = Attribute(
         name="test1",
-        inmanta_type="string",
+        inmanta_type=InmantaStringType,
         description="This is a test attribute",
         entity=entity,
     )
@@ -144,12 +145,12 @@ def test_plugin(project: Project) -> None:
         arguments=[
             PluginArgument(
                 name="world",
-                inmanta_type="string",
+                inmanta_type=InmantaStringType,
             ),
         ],
         return_type=PluginArgument(
             name="",
-            inmanta_type="string",
+            inmanta_type=InmantaStringType,
         ),
         content="""return f"hello {world}" """,
     )

@@ -16,32 +16,18 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
-from typing import Optional, Union
-
-from typing_extensions import Literal
+from typing import Optional
 
 from inmanta_module_factory.inmanta import entity as inmanta_entity
 from inmanta_module_factory.inmanta import entity_field
-
-InmantaPrimitiveType = Literal["string", "int", "float", "number", "bool"]
-
-
-class InmantaPrimitiveList:
-    def __init__(self, primitive_type: InmantaPrimitiveType) -> None:
-        self.primitive_type = primitive_type
-
-    def __str__(self) -> str:
-        return self.primitive_type + "[]"
-
-
-InmantaAttributeType = Union[Literal["dict", "any"], InmantaPrimitiveType, InmantaPrimitiveList]
+from inmanta_module_factory.inmanta.types import InmantaType
 
 
 class Attribute(entity_field.EntityField):
     def __init__(
         self,
         name: str,
-        inmanta_type: InmantaAttributeType,
+        inmanta_type: InmantaType,
         optional: bool = False,
         default: Optional[str] = None,
         description: Optional[str] = None,
@@ -56,21 +42,24 @@ class Attribute(entity_field.EntityField):
         :param entity: The entity this attribute is a part of
         """
         entity_field.EntityField.__init__(self, name, entity)
-        self._inmanta_type = inmanta_type
+        self.inmanta_type = inmanta_type
         self.optional = optional
         self.default = default
         self.description = description
 
     @property
     def is_list(self) -> bool:
-        return isinstance(self._inmanta_type, InmantaPrimitiveList)
-
-    @property
-    def inmanta_type(self) -> str:
-        return str(self._inmanta_type)
+        return str(self.inmanta_type).endswith("[]")
 
     def __str__(self) -> str:
-        type_expression = self.inmanta_type
+        # The type reference is the full path if the type is not defined
+        # in the same file as this typedef
+        type_expression = (
+            self.inmanta_type.full_path_string
+            if self.inmanta_type.path_string != self.entity.path_string
+            else self.inmanta_type.name
+        )
+
         if self.optional:
             type_expression += "?"
 

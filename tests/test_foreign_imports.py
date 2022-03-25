@@ -26,6 +26,7 @@ from inmanta_module_factory.inmanta.entity import Entity
 from inmanta_module_factory.inmanta.implement import Implement
 from inmanta_module_factory.inmanta.implementation import Implementation
 from inmanta_module_factory.inmanta.module import Module
+from inmanta_module_factory.inmanta.types import InmantaStringType
 
 
 def test_foreign_implementation(project: Project) -> None:
@@ -42,7 +43,7 @@ def test_foreign_implementation(project: Project) -> None:
         fields=[
             Attribute(
                 name="test",
-                inmanta_type="string",
+                inmanta_type=InmantaStringType,
                 description="This is a test attribute",
             ),
         ],

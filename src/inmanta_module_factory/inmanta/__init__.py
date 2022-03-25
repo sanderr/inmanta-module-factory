@@ -29,3 +29,17 @@ from inmanta_module_factory.inmanta.module_element import (  # noqa: F401
     ModuleElement,
 )
 from inmanta_module_factory.inmanta.plugin import Plugin, PluginArgument  # noqa: F401
+from inmanta_module_factory.inmanta.typedef import TypeDef  # noqa: F401
+from inmanta_module_factory.inmanta.types import (  # noqa: F401
+    InmantaAdvancedType,
+    InmantaAnyType,
+    InmantaBaseType,
+    InmantaBooleanType,
+    InmantaDictType,
+    InmantaIntegerType,
+    InmantaListType,
+    InmantaNumberType,
+    InmantaPrimitiveType,
+    InmantaStringType,
+    InmantaType,
+)
