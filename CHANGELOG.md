@@ -1,4 +1,4 @@
-# v 1.2.0 (?)
+# v 2.0.0 (?)
 Changes in this release:
  - Added support for typedef statement. (#109)
  - Refactored the type hierarchy.
