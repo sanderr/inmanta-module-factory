@@ -30,6 +30,7 @@ from inmanta_module_factory.inmanta.index import Index
 from inmanta_module_factory.inmanta.module import Module
 from inmanta_module_factory.inmanta.plugin import Plugin, PluginArgument
 from inmanta_module_factory.inmanta.types import InmantaListType, InmantaStringType
+from inmanta_module_factory.stats.stats import ModuleFileStats, ModuleStats
 
 
 def test_empty_module(project: Project) -> None:
@@ -112,6 +113,24 @@ def test_basic_module(project: Project) -> None:
     module_builder.add_module_element(implement)
     module_builder.add_module_element(index)
     module_builder.add_module_element(relation)
+
+    assert module_builder.generate_module_stats() == ModuleStats(
+        entity_count=1,
+        entity_relation_count=1,
+        index_count=1,
+        implement_count=1,
+        implementation_count=1,
+        type_def_count=0,
+        module_init_stats=ModuleFileStats(
+            entity_count=1,
+            entity_relation_count=1,
+            index_count=1,
+            implement_count=1,
+            implementation_count=1,
+            type_def_count=0,
+        ),
+        sub_modules_stats={},
+    )
 
     module_builder.generate_module(Path(project._test_project_dir) / "libs")
 

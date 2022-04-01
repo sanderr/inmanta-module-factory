@@ -20,16 +20,18 @@ import logging
 import shutil
 from pathlib import Path
 from textwrap import dedent
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 
 import yaml
 
+from inmanta_module_factory.helpers import utils
 from inmanta_module_factory.inmanta.module import Module
 from inmanta_module_factory.inmanta.module_element import (
     DummyModuleElement,
     ModuleElement,
 )
 from inmanta_module_factory.inmanta.plugin import Plugin
+from inmanta_module_factory.stats.stats import ModuleFileStats, ModuleStats
 
 LOGGER = logging.getLogger(__name__)
 
@@ -57,6 +59,65 @@ class InmantaModuleBuilder:
 
     def add_plugin(self, plugin: Plugin) -> None:
         self._plugins.append(plugin)
+
+    def generate_path_tree(self) -> Dict[str, Any]:
+        """
+        Convert the list of paths into a dict tree, which represents the generated file structure.
+        Each key in the dict represents a sub-folder, the _init.cf files are not represented.
+        """
+        tree: Dict[str, Any] = dict()
+        for raw_path in self._model_files.keys():
+            path = raw_path.split("::")
+            tree_ref = tree
+            for elem in path:
+                if elem not in tree_ref:
+                    tree_ref[elem] = dict()
+
+                tree_ref = tree_ref[elem]
+
+        return tree
+
+    def generate_module_stats(self, path: Optional[str] = None, tree: Optional[Dict[str, Any]] = None) -> ModuleStats:
+        """
+        Generate statistics about the generated module content.  The statistics simply counts the amount of
+        different elements in _init.cf file in each module as well as the sum of those counts for all the
+        submodules of a module.
+        """
+        if path is None:
+            path = self._module.name
+
+        if tree is None:
+            tree = self.generate_path_tree()
+            for elem in path.split("::"):
+                tree = tree[elem]
+                assert isinstance(tree, dict)
+
+        # Getting the stats for the module's init file
+        file_stats: Dict[str, int] = ModuleFileStats().dict()
+        for module_element in self._model_files[path]:
+            element_type = utils.camel_case_to_snake_case(str(module_element.__class__.__name__))
+            if element_type == "dummy_module_element":
+                # The list might contain a dummy_module_element, we don't take this into account
+                # in our stats
+                continue
+
+            element_stat = f"{element_type}_count"
+            file_stats[element_stat] = file_stats[element_stat] + 1
+
+        # Getting the stats from all the sub modules
+        sub_modules_stats: Dict[str, ModuleStats] = dict()
+        for sub_module in tree:
+            sub_module_path = "::".join([path, sub_module])
+            sub_modules_stats[sub_module] = self.generate_module_stats(sub_module_path, tree[sub_module])
+
+        # The stats of a module are the sum of all its submodules and the init file stats
+        module_stats = {k: sum([getattr(stats, k) for stats in sub_modules_stats.values()]) + v for k, v in file_stats.items()}
+
+        return ModuleStats(
+            **module_stats,
+            module_init_stats=ModuleFileStats(**file_stats),
+            sub_modules_stats=sub_modules_stats,
+        )
 
     def generate_model_file(
         self,

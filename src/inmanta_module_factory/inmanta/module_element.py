@@ -50,7 +50,6 @@ class ModuleElement:
         """
         This value will be used to order elements in the same file.
         """
-        pass
 
     @property
     def ordering_key(self) -> str:
@@ -87,7 +86,6 @@ class ModuleElement:
         This method should be implemented by the children classes, it should return a set containing
         all the derived imports for this specific element.
         """
-        pass
 
     def get_imports(self) -> Set[str]:
         """
