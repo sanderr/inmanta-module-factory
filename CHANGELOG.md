@@ -1,3 +1,6 @@
+# v 2.2.0 (?)
+Changes in this release:
+
 # v 2.1.0 (2022-04-01)
 Changes in this release:
  - Added statistics generation method. (#113)
