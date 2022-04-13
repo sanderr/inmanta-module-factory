@@ -389,7 +389,7 @@ python-versions = "*"
 
 [[package]]
 name = "inmanta-core"
-version = "6.0.1"
+version = "6.1.0"
 description = "Inmanta deployment tool"
 category = "main"
 optional = false
@@ -398,7 +398,7 @@ python-versions = ">=3.6"
 [package.dependencies]
 asyncpg = "*"
 build = "*"
-click = "*"
+click = ">=8.0,<8.2"
 click-plugins = "*"
 colorlog = "*"
 cookiecutter = "*"
@@ -425,7 +425,7 @@ typing-inspect = "*"
 [package.extras]
 datatrace = ["graphviz"]
 debug = ["rpdb"]
-pytest-inmanta-extensions = ["pytest-inmanta-extensions (>=6.0.1.0.dev,<6.1.0)"]
+pytest-inmanta-extensions = ["pytest-inmanta-extensions (>=6.1.0.0.dev,<6.2.0)"]
 
 [[package]]
 name = "inmanta-dev-dependencies"
@@ -1186,8 +1186,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 inmanta-core = [
-    {file = "inmanta-core-6.0.1.tar.gz", hash = "sha256:aaf4e77ba2e1c10ffb501665f66b72279790fba6820212d78adb050c67d55473"},
-    {file = "inmanta_core-6.0.1-py3-none-any.whl", hash = "sha256:f4d64cbfb4e4106d5a2767d8546ab9f7f83e870a4dc6340ce4ab95e59edef7d2"},
+    {file = "inmanta-core-6.1.0.tar.gz", hash = "sha256:66457124575e3d158e232da47188106b0e8f23197249c934cf18730f4f665ce4"},
+    {file = "inmanta_core-6.1.0-py3-none-any.whl", hash = "sha256:66f55a69c4435974722ebdc84fa7e4af71b1e39116a741c74adbf6049cc0f3c1"},
 ]
 inmanta-dev-dependencies = [
     {file = "inmanta-dev-dependencies-1.76.0.tar.gz", hash = "sha256:5ce4a56095eac221fee5748ef3e78e83b2947302a0f1d425f40b47a2dc09739a"},
