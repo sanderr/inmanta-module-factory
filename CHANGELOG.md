@@ -1,4 +1,4 @@
-# v 2.2.0 (?)
+# v 2.2.0 (2022-05-04)
 Changes in this release:
  - Use inmanta-module-template as base to generate the module.  (#126)
 
