@@ -23,6 +23,7 @@ from textwrap import dedent
 from typing import Any, Dict, List, Optional, Set
 
 import yaml
+from cookiecutter.main import cookiecutter  # type: ignore
 
 from inmanta_module_factory.helpers import utils
 from inmanta_module_factory.inmanta.module import Module
@@ -238,7 +239,21 @@ class InmantaModuleBuilder:
 
             shutil.rmtree(str(module_path))
 
-        module_path.mkdir(parents=True)
+        module_path.parent.mkdir(parents=True, exist_ok=True)
+        cookiecutter(
+            "https://github.com/inmanta/inmanta-module-template.git",
+            checkout="v1",
+            output_dir=str(module_path.parent),
+            no_input=True,
+            extra_context={
+                "module_name": self._module.name,
+            },
+        )
+
+        # The following parts of the module are overwritten fully by the generator
+        shutil.rmtree(str(module_path / "model"))
+        shutil.rmtree(str(module_path / "plugins"))
+        shutil.rmtree(str(module_path / "tests"))
 
         self.generate_plugin_file(build_location, force, copyright_header_template)
 
