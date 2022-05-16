@@ -750,7 +750,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xm
 
 [[package]]
 name = "pytest-inmanta"
-version = "2.3.0"
+version = "2.3.1"
 description = "A py.test plugin providing fixtures to simplify inmanta modules testing."
 category = "dev"
 optional = false
@@ -1502,7 +1502,7 @@ pytest = [
     {file = "pytest-6.2.5.tar.gz", hash = "sha256:131b36680866a76e6781d13f101efb86cf674ebb9762eb70d3082b6f29889e89"},
 ]
 pytest-inmanta = [
-    {file = "pytest-inmanta-2.3.0.tar.gz", hash = "sha256:dc44fab20061ddd5ecfd72ef146bea1cad979372a0f7de986d2bb56380230801"},
+    {file = "pytest-inmanta-2.3.1.tar.gz", hash = "sha256:cb3039fc35a81c2cf3602dd026ccfba9787e899cfc9d9af72db33d1937f8bb1b"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
