@@ -1,5 +1,6 @@
 # v 2.3.0 (?)
 Changes in this release:
+ - Fix generation of statistics for empty model files.
 
 # v 2.2.0 (2022-05-04)
 Changes in this release:

@@ -95,7 +95,7 @@ class InmantaModuleBuilder:
 
         # Getting the stats for the module's init file
         file_stats: Dict[str, int] = ModuleFileStats().dict()
-        for module_element in self._model_files[path]:
+        for module_element in self._model_files.get(path, []):
             element_type = utils.camel_case_to_snake_case(str(module_element.__class__.__name__))
             if element_type == "dummy_module_element":
                 # The list might contain a dummy_module_element, we don't take this into account
