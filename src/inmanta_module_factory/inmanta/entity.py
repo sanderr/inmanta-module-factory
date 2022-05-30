@@ -49,6 +49,16 @@ class Entity(ModuleElement):
             field.attach_entity(self)
         self.parents = parents or []
 
+    def all_fields(self) -> Set["entity_field.EntityField"]:
+        """
+        Return a set of all the fields of the entity, and any of its parent
+        """
+        parents_fields = set()
+        for parent in self.parents:
+            parents_fields |= parent.all_fields()
+
+        return self.fields | parents_fields
+
     def attach_field(self, field: "entity_field.EntityField") -> None:
         self.fields.add(field)
 

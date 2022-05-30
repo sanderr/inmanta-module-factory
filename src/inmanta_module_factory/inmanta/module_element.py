@@ -16,6 +16,7 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
+import logging
 from abc import abstractmethod
 from typing import List, Optional, Set
 
@@ -38,6 +39,8 @@ class ModuleElement:
         self.description = description
         self.imports: Set[str] = set()
         self._forced_ordering_key: Optional[str] = None
+
+        self._logger = logging.getLogger(repr(self))
 
         if not path:
             raise ValueError(
@@ -121,6 +124,9 @@ class ModuleElement:
 
     def __str__(self) -> str:
         raise NotImplementedError("A module element is not part of the inmanta syntax.")
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(name={self.name})@{self.path_string}"
 
 
 class DummyModuleElement(ModuleElement):

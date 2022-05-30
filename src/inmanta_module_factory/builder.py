@@ -139,6 +139,9 @@ class InmantaModuleBuilder:
             LOGGER.warning(f"No module elements found for {file_key}, skipping.")
             return None
 
+        if not all(module_element.validate() for module_element in module_elements):
+            raise ValueError(f"The validation of the sub module {file_key} failed")
+
         file_path = build_location / Path(
             self._module.name,
             "model",

@@ -61,9 +61,14 @@ class Index(ModuleElement):
 
     def validate(self) -> bool:
         if len(self.fields) == 0:
+            self._logger.warning("An index should always have more than one field")
             return False
 
-        if not len(set(self.fields) - self.entity.fields) == 0:
+        all_fields = self.entity.all_fields()
+        if not len(set(self.fields) - all_fields) == 0:
+            self._logger.warning(
+                "Some fields part of the index, are not part of the entity: " f"{set(self.fields) - all_fields}"
+            )
             return False
 
         return True
