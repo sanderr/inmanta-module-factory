@@ -16,8 +16,12 @@
     Contact: code@inmanta.com
     Author: Inmanta
 """
+import subprocess
+import sys
 from pathlib import Path
+from typing import Literal
 
+import pytest
 from pytest_inmanta.plugin import Project
 
 from inmanta_module_factory.builder import InmantaModuleBuilder
@@ -33,16 +37,49 @@ from inmanta_module_factory.inmanta.types import InmantaListType, InmantaStringT
 from inmanta_module_factory.stats.stats import ModuleFileStats, ModuleStats
 
 
-def test_empty_module(project: Project) -> None:
+@pytest.mark.parametrize("generation", ["v1", "v2"])
+def test_empty_module(project: Project, tmp_path: Path, generation: Literal["v1", "v2"]) -> None:
     """
-    This simple test creates an empty module and validates that it is a valid inmanta module
+    This simple test creates an empty module and validates that it is a valid inmanta module.
+    We need the project fixture for its venv "inheritance" capabilities.  This insure than when
+    installing the generated module (and any of its dependencies) in the venv, it won't affect
+    all the other test cases.
     """
     module = Module(name="test")
-    module_builder = InmantaModuleBuilder(module)
+    module_builder = InmantaModuleBuilder(module, generation=generation)
 
-    module_builder.generate_module(Path(project._test_project_dir) / "libs")
+    module_builder.generate_module(tmp_path)
 
-    project.compile("import test")
+    if generation == "v2":
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "inmanta.app",
+                "module",
+                "install",
+                "-e",
+                str(tmp_path / "test"),
+            ],
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            encoding="utf-8",
+        )
+        assert result.returncode == 0, result.stderr
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "tests",
+        ],
+        cwd=str(tmp_path / "test"),
+        stderr=subprocess.PIPE,
+        universal_newlines=True,
+        encoding="utf-8",
+    )
+    assert result.returncode == 0, result.stderr
 
 
 def test_basic_module(project: Project) -> None:

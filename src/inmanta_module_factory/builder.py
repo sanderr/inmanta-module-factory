@@ -18,11 +18,11 @@
 """
 import logging
 import shutil
+from collections import defaultdict
 from pathlib import Path
 from textwrap import dedent
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Literal, Optional, Set
 
-import yaml
 from cookiecutter.main import cookiecutter  # type: ignore
 
 from inmanta_module_factory.helpers import utils
@@ -38,10 +38,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 class InmantaModuleBuilder:
-    def __init__(self, module: Module) -> None:
+    def __init__(self, module: Module, *, generation: Literal["v1", "v2"] = "v1") -> None:
         self._module = module
-        self._model_files: Dict[str, List[ModuleElement]] = dict()
+        self._model_files: Dict[str, List[ModuleElement]] = defaultdict(list)
         self._plugins: List[Plugin] = list()
+        self.generation = generation
 
         # Ensuring the model folder exists
         self.add_module_element(DummyModuleElement([module.name]))
@@ -53,10 +54,7 @@ class InmantaModuleBuilder:
                 f"Got '{module_element.path[0]}', expected '{self._module.name}'"
             )
 
-        if module_element.path_string in self._model_files.keys():
-            self._model_files[module_element.path_string].append(module_element)
-        else:
-            self._model_files.setdefault(module_element.path_string, [module_element])
+        self._model_files[module_element.path_string].append(module_element)
 
     def add_plugin(self, plugin: Plugin) -> None:
         self._plugins.append(plugin)
@@ -122,7 +120,7 @@ class InmantaModuleBuilder:
 
     def generate_model_file(
         self,
-        build_location: Path,
+        model_folder: Path,
         file_key: str,
         force: bool = False,
         copyright_header_template: Optional[str] = None,
@@ -142,12 +140,7 @@ class InmantaModuleBuilder:
         if not all(module_element.validate() for module_element in module_elements):
             raise ValueError(f"The validation of the sub module {file_key} failed")
 
-        file_path = build_location / Path(
-            self._module.name,
-            "model",
-            "/".join(module_elements[0].path[1:]),
-            "_init.cf",
-        )
+        file_path = model_folder / "/".join(module_elements[0].path[1:]) / "_init.cf"
         file_path.parent.mkdir(parents=True, exist_ok=True)
         if file_path.exists():
             LOGGER.warning(f"Generating a file where a file already exists: {str(file_path)}")
@@ -174,16 +167,16 @@ class InmantaModuleBuilder:
         return file_path
 
     def generate_plugin_file(
-        self, build_location: Path, force: bool = False, copyright_header_template: Optional[str] = None
+        self, plugins_folder: Path, force: bool = False, copyright_header_template: Optional[str] = None
     ) -> Path:
         self._plugins.sort(key=lambda plugin: plugin.name)
 
-        file_path = build_location / Path(self._module.name, "plugins/__init__.py")
+        file_path = plugins_folder / "__init__.py"
         file_path.parent.mkdir(parents=True, exist_ok=True)
         if file_path.exists():
             LOGGER.warning(f"Generating a file where a file already exists: {str(file_path)}")
             if not force:
-                raise RuntimeError(f"Generating this file would have overwritten and existing one: {str(file_path)}")
+                raise RuntimeError(f"Generating this file would have overwritten an existing one: {str(file_path)}")
 
         imports: Set[str] = set()
         for plugin in self._plugins:
@@ -205,9 +198,9 @@ class InmantaModuleBuilder:
         return file_path
 
     def generate_model_test(
-        self, build_location: Path, force: bool = False, copyright_header_template: Optional[str] = None
+        self, tests_folder: Path, force: bool = False, copyright_header_template: Optional[str] = None
     ) -> Path:
-        file_path = build_location / Path(self._module.name, "tests/test_basics.py")
+        file_path = tests_folder / "test_basics.py"
         file_path.parent.mkdir(parents=True, exist_ok=True)
         if file_path.exists():
             LOGGER.warning(f"Generating a file where a file already exists: {str(file_path)}")
@@ -235,7 +228,7 @@ class InmantaModuleBuilder:
     def generate_module(
         self, build_location: Path, force: bool = False, copyright_header_template: Optional[str] = None
     ) -> None:
-        module_path = build_location / Path(self._module.name)
+        module_path = build_location / self._module.name
         if module_path.exists():
             if not force:
                 raise RuntimeError(f"Generating this module would have overwritten the following path: {str(module_path)}")
@@ -245,20 +238,30 @@ class InmantaModuleBuilder:
         module_path.parent.mkdir(parents=True, exist_ok=True)
         cookiecutter(
             "https://github.com/inmanta/inmanta-module-template.git",
-            checkout="v1",
+            checkout=self.generation,
             output_dir=str(module_path.parent),
             no_input=True,
             extra_context={
                 "module_name": self._module.name,
+                "module_description": self._module.description,
+                "author": self._module.author,
+                "author_email": self._module.author_email,
+                "license": self._module.license,
+                "copyright": self._module.copyright,
+                "minimal_compiler_version": self._module.compiler_version or "2019.3",
             },
+        )
+
+        plugins_folder = (
+            module_path / "plugins" if self.generation == "v1" else module_path / "inmanta_plugins" / self._module.name
         )
 
         # The following parts of the module are overwritten fully by the generator
         shutil.rmtree(str(module_path / "model"))
-        shutil.rmtree(str(module_path / "plugins"))
+        shutil.rmtree(str(plugins_folder))
         shutil.rmtree(str(module_path / "tests"))
 
-        self.generate_plugin_file(build_location, force, copyright_header_template)
+        self.generate_plugin_file(plugins_folder, force, copyright_header_template)
 
         for file_key in list(self._model_files.keys()):
             if file_key == self._module.name:
@@ -272,12 +275,6 @@ class InmantaModuleBuilder:
                     self._model_files[parent_path] = [DummyModuleElement(parent_path.split("::"))]
 
         for file_key in self._model_files.keys():
-            self.generate_model_file(build_location, file_key, force, copyright_header_template)
+            self.generate_model_file(module_path / "model", file_key, force, copyright_header_template)
 
-        self.generate_model_test(build_location, force, copyright_header_template)
-
-        file_path = module_path / Path("module.yml")
-        file_path.touch()
-        with open(str(file_path), "w") as f:
-            yaml.dump(self._module.as_dict(), f)
-            f.close()
+        self.generate_model_test(module_path / "tests", force, copyright_header_template)

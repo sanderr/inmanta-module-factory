@@ -62,17 +62,3 @@ class Module:
             return EULA_COPYRIGHT_HEADER_TMPL % tmpl_dict
 
         return ""
-
-    def as_dict(self) -> dict:
-        module_config = dict(
-            name=self.name,
-            version=self.version,
-            description=self.description,
-            author=self.author,
-            author_email=self.author_email,
-            license=self.license,
-            copyright=self.copyright,
-        )
-        if self.compiler_version is not None:
-            module_config["compiler_version"] = self.compiler_version
-        return module_config

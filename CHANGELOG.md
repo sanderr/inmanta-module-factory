@@ -2,6 +2,7 @@
 Changes in this release:
  - Fix generation of statistics for empty model files.
  - Add support for multiple implementations in one implement statement (#141)
+ - Add support for module v2 generation (#2)
 
 # v 2.2.0 (2022-05-04)
 Changes in this release:
