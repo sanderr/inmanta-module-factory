@@ -808,7 +808,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "regex"
-version = "2022.6.2"
+version = "2022.7.9"
 description = "Alternative regular expression module, to replace re."
 category = "dev"
 optional = false
