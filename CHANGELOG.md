@@ -1,4 +1,4 @@
-# v 2.3.0 (?)
+# v 2.3.0 (2022-07-18)
 Changes in this release:
  - Fix generation of statistics for empty model files.
  - Add support for multiple implementations in one implement statement (#141)
