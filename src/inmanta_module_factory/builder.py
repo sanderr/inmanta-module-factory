@@ -23,6 +23,7 @@ from pathlib import Path
 from textwrap import dedent
 from typing import Any, Dict, List, Literal, Optional, Set
 
+import inmanta.module
 from cookiecutter.main import cookiecutter  # type: ignore
 
 from inmanta_module_factory.helpers import utils
@@ -227,19 +228,12 @@ class InmantaModuleBuilder:
 
     def generate_module(
         self, build_location: Path, force: bool = False, copyright_header_template: Optional[str] = None
-    ) -> None:
-        module_path = build_location / self._module.name
-        if module_path.exists():
-            if not force:
-                raise RuntimeError(f"Generating this module would have overwritten the following path: {str(module_path)}")
-
-            shutil.rmtree(str(module_path))
-
-        module_path.parent.mkdir(parents=True, exist_ok=True)
-        cookiecutter(
+    ) -> inmanta.module.Module:
+        build_location.mkdir(parents=True, exist_ok=True)
+        template_path = cookiecutter(
             "https://github.com/inmanta/inmanta-module-template.git",
             checkout=self.generation,
-            output_dir=str(module_path.parent),
+            output_dir=str(build_location),
             no_input=True,
             extra_context={
                 "module_name": self._module.name,
@@ -250,11 +244,24 @@ class InmantaModuleBuilder:
                 "copyright": self._module.copyright,
                 "minimal_compiler_version": self._module.compiler_version or "2019.3",
             },
+            overwrite_if_exists=force,
         )
 
-        plugins_folder = (
-            module_path / "plugins" if self.generation == "v1" else module_path / "inmanta_plugins" / self._module.name
-        )
+        module_path = Path(template_path)
+        LOGGER.debug(f"Module template created at: {module_path}")
+
+        module = inmanta.module.Module.from_path(str(module_path))
+        if module is None:
+            raise RuntimeError("Could not import module from template")
+
+        LOGGER.debug(f"Module generation: {module.GENERATION.name}")
+        if isinstance(module, inmanta.module.ModuleV2):
+            # We mark the module as editable, otherwise get_plugin_dir will return
+            # the root of the folder instead of the inmanta_plugins/<module_name> dir
+            module._is_editable_install = True
+
+        plugins_folder = Path(module.get_plugin_dir() or "")
+        LOGGER.debug(f"Module's plugins folder: {plugins_folder}")
 
         # The following parts of the module are overwritten fully by the generator
         shutil.rmtree(str(module_path / "model"))
@@ -278,3 +285,5 @@ class InmantaModuleBuilder:
             self.generate_model_file(module_path / "model", file_key, force, copyright_header_template)
 
         self.generate_model_test(module_path / "tests", force, copyright_header_template)
+
+        return module

@@ -45,10 +45,11 @@ def test_empty_module(project: Project, tmp_path: Path, generation: Literal["v1"
     installing the generated module (and any of its dependencies) in the venv, it won't affect
     all the other test cases.
     """
-    module = Module(name="test")
+    module = Module(name="test_test")
     module_builder = InmantaModuleBuilder(module, generation=generation)
 
-    module_builder.generate_module(tmp_path)
+    m = module_builder.generate_module(tmp_path)
+    assert m is not None
 
     if generation == "v2":
         result = subprocess.run(
@@ -59,7 +60,7 @@ def test_empty_module(project: Project, tmp_path: Path, generation: Literal["v1"
                 "module",
                 "install",
                 "-e",
-                str(tmp_path / "test"),
+                m.path,
             ],
             stderr=subprocess.PIPE,
             universal_newlines=True,
@@ -74,7 +75,7 @@ def test_empty_module(project: Project, tmp_path: Path, generation: Literal["v1"
             "pytest",
             "tests",
         ],
-        cwd=str(tmp_path / "test"),
+        cwd=m.path,
         stderr=subprocess.PIPE,
         universal_newlines=True,
         encoding="utf-8",

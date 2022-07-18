@@ -1,5 +1,6 @@
 # v 2.4.0 (?)
 Changes in this release:
+ - Enhance module v2 generation support.
 
 # v 2.3.0 (2022-07-18)
 Changes in this release:
