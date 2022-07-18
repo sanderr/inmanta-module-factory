@@ -1,3 +1,6 @@
+# v 2.4.0 (?)
+Changes in this release:
+
 # v 2.3.0 (2022-07-18)
 Changes in this release:
  - Fix generation of statistics for empty model files.
