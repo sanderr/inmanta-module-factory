@@ -16,7 +16,7 @@ cookiecutter = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
 inmanta-dev-dependencies = {extras = ["module"], version = "^1.76.0"}
-types-PyYAML = "^6.0.11"
+types-PyYAML = "^6.0.12"
 
 [tool.black]
 line-length = 128
