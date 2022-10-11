@@ -1,5 +1,6 @@
 # v 2.4.0 (?)
 Changes in this release:
+ - Update default Inmanta EULA header
  - Enhance module v2 generation support.
 
 # v 2.3.0 (2022-07-18)

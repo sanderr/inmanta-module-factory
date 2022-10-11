@@ -49,8 +49,8 @@ EULA_COPYRIGHT_HEADER_TMPL = '''
 """
     :copyright: %(copyright)s
     :contact: %(contact)s
-    :author: %(author)s
     :license: Inmanta EULA
+    :author: %(author)s
 """
 '''.strip(
     "\n"
