@@ -51,6 +51,9 @@ class Attribute(entity_field.EntityField):
     def is_list(self) -> bool:
         return str(self.inmanta_type).endswith("[]")
 
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}(name={repr(self.name)}, inmanta_type={repr(self.inmanta_type)})"
+
     def __str__(self) -> str:
         # The type reference is the full path if the type is not defined
         # in the same file as this typedef

@@ -61,7 +61,7 @@ class Index(ModuleElement):
 
     def validate(self) -> bool:
         if len(self.fields) == 0:
-            self._logger.warning("An index should always have more than one field")
+            self._logger.warning(f"An index should always have more than one field: {repr(self.entity)}")
             return False
 
         all_fields = self.entity.all_fields()

@@ -18,6 +18,8 @@
 """
 from inmanta.parser.plyInmantaLex import keyworldlist
 
+from inmanta_module_factory import __version__
+
 INDENT_PREFIX = "    "  # Four spaces
 
 ASL_2_0_LICENSE = "ASL 2.0"
@@ -57,3 +59,10 @@ EULA_COPYRIGHT_HEADER_TMPL = '''
 )
 
 INMANTA_RESERVED_KEYWORDS = keyworldlist
+
+
+GENERATED_FILE_MARKER = "IMF-GENERATED-FILE"
+GENERATED_FILE_FOOTER = f"""
+# This file has been generated using inmanta-module-factory=={__version__}
+# <{GENERATED_FILE_MARKER}/>
+"""

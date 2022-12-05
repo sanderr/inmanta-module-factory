@@ -71,7 +71,7 @@ class Entity(ModuleElement):
         return [field for field in self.fields if isinstance(field, entity_relation.EntityRelation)]
 
     def _ordering_key(self) -> str:
-        return self.name
+        return self.name + ".entity"
 
     def _get_derived_imports(self) -> Set[str]:
         imports = set()
@@ -115,13 +115,18 @@ class Entity(ModuleElement):
             parents = []
             for parent in self.parents:
                 parent_path = parent.name
+                if parent.full_path_string == "std::Entity":
+                    # This is implicit, not need to specify it
+                    continue
+
                 if self.path_string != parent.path_string:
                     # Parent is in a different file
                     parent_path = parent.full_path_string
 
                 parents.append(parent_path)
 
-            inheritance = " extends " + ", ".join(parents)
+            if parents:
+                inheritance = " extends " + ", ".join(parents)
 
         return f"entity {self.name}{inheritance}:\n"
 

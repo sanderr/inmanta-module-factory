@@ -2,6 +2,8 @@
 Changes in this release:
  - Update default Inmanta EULA header
  - Enhance module v2 generation support.
+ - Add tools to fix the formatting of the generated module.
+ - Add support for partial module re-generation.
 
 # v 2.3.0 (2022-07-18)
 Changes in this release:
