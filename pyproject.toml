@@ -11,7 +11,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 PyYAML = "^6.0"
-inmanta-core = "^7.0.1"
+inmanta-core = ">=7.0.1,<9.0.0"
 cookiecutter = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
