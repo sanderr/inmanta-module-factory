@@ -12,7 +12,7 @@ packages = [
 python = ">=3.9,<4.0"
 PyYAML = "^6.0"
 inmanta-core = ">=7.0.1,<9.0.0"
-cookiecutter = "^1.7.3"
+cookiecutter = ">=1.7.3,<3.0.0"
 
 [tool.poetry.dev-dependencies]
 inmanta-dev-dependencies = {extras = ["module"], version = "^2.48.0"}
