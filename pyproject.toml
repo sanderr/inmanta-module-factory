@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = { find = { include = ["inmanta_module_factory"], where = ["src"] } }
+packages = { find = { include = ["inmanta_module_factory*"], where = ["src"] } }
 
 [tool.black]
 line-length = 128
