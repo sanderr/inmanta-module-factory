@@ -240,6 +240,7 @@ class InmantaModuleBuilder:
         )
 
         if self.allow_watermark:
+            file_content += "\n"  # make black happy
             file_content += const.GENERATED_FILE_FOOTER
 
         file_path.write_text(file_content)
