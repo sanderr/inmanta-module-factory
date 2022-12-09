@@ -1,22 +1,23 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "inmanta-module-factory"
 version = "2.5.0"
+requires-python = ">=3.9,<4.0"
 description = "Library for building inmanta modules with python code"
-authors = ["Inmanta <code@inmanta.com>"]
-license = "Apache-2.0"
-packages = [
-    { include = "inmanta_module_factory", from = "src" },
+authors = [
+    {name = "Inmanta", email = "code@inmanta.com"},
+]
+dependencies = [
+	"PyYAML~=6.0",
+	"inmanta-core>=7.0.1,<9.0.0",
+	"cookiecutter>=1.7.3,<3.0.0",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-PyYAML = "^6.0"
-inmanta-core = ">=7.0.1,<9.0.0"
-cookiecutter = ">=1.7.3,<3.0.0"
-
-[tool.poetry.dev-dependencies]
-inmanta-dev-dependencies = {extras = ["module"], version = "^2.48.0"}
-types-PyYAML = "^6.0.12"
+[tool.setuptools]
+packages = { find = { include = ["inmanta_module_factory"], where = ["src"] } }
 
 [tool.black]
 line-length = 128
@@ -45,7 +46,3 @@ use_parentheses = true
 # Black splits up import statements that are too long
 # Setting isorts line_length to 88 (blacks default) so they do not collide
 line_length = 88
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

@@ -7,9 +7,7 @@ flake8 = flake8 src/inmanta_module_factory tests
 .PHONY: install
 install:
 	pip install -U pip
-	pip install -U poetry
-	poetry config experimental.new-installer false --local
-	poetry install
+	pip install -e . -c requirements.txt -r requirements.dev.txt
 
 .PHONY: format
 format:
