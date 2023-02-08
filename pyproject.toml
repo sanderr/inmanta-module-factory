@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "inmanta-module-factory-2"
+name = "inmanta-module-factory"
 version = "2.5.0"
 requires-python = ">=3.9,<4.0"
 description = "Library for building inmanta modules with python code"
