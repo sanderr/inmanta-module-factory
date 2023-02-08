@@ -10,7 +10,9 @@ description = "Library for building inmanta modules with python code"
 authors = [
     {name = "Inmanta", email = "code@inmanta.com"},
 ]
-dependencies = []
+dependencies = [
+	"inmanta-core>=7.0.1,<9.0.0",
+]
 
 [tool.setuptools]
 packages = { find = { include = ["inmanta_module_factory*"], where = ["src"] } }
