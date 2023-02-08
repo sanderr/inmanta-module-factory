@@ -12,6 +12,7 @@ authors = [
 ]
 dependencies = [
 	"more-itertools",
+	"inmanta-core",
 ]
 
 [tool.setuptools]
