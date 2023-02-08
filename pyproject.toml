@@ -3,10 +3,10 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "inmanta-module-factory"
+name = "lorem"
 version = "2.5.0"
 requires-python = ">=3.9,<4.0"
-description = "Library for building inmanta modules with python code"
+description = "Generator for random text that looks like Latin."
 authors = [
     {name = "Inmanta", email = "code@inmanta.com"},
 ]
