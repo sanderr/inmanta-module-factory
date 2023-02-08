@@ -7,41 +7,6 @@ name = "lorem"
 version = "2.5.0"
 requires-python = ">=3.9,<4.0"
 description = "Generator for random text that looks like Latin."
-authors = [
-    {name = "Inmanta", email = "code@inmanta.com"},
-]
 dependencies = [
 	"more-itertools",
-	"inmanta-core",
 ]
-
-[tool.setuptools]
-packages = { find = { include = ["inmanta_module_factory*"], where = ["src"] } }
-
-[tool.black]
-line-length = 128
-target-version = ['py36', 'py37', 'py38']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | \.env
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
-
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-# Black splits up import statements that are too long
-# Setting isorts line_length to 88 (blacks default) so they do not collide
-line_length = 88

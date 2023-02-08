@@ -1,1 +1,1 @@
-inmanta-core==8.0.0
+more-itertools==8.14.0
