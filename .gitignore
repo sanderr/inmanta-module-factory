@@ -5,3 +5,5 @@ mypy
 **/__pycache__
 dist/
 *.egg-info
+build/
+tmp/
