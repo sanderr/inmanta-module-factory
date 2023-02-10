@@ -8,5 +8,5 @@ version = "2.5.0"
 requires-python = ">=3.9,<4.0"
 description = "Generator for random text that looks like Latin."
 dependencies = [
-	"more-itertools>=8,<9",
+	"cookiecutter>=1,<2",
 ]
