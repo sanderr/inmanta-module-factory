@@ -8,4 +8,4 @@ updates:
   allow:
     # Allow both direct and indirect updates for all packages
     - dependency-type: "all"
-  versioning-strategy: widen
+  versioning-strategy: increase
